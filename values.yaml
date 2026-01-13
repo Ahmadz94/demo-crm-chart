@@ -1,0 +1,92 @@
+replicaCount: 1
+
+image:
+  repository: europe-north1-docker.pkg.dev/pure-hue-483512-h6/demo-crm/demo-crm
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: gar-pull
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.org/ssl-redirect: "true"
+    nginx.org/redirect-to-https: "true"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  hosts:
+    - host: ademocrm.ddns.net
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: demo-crm-tls
+      hosts:
+        - ademocrm.ddns.net
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+config:
+  logLevel: info
+  persistence: "true"
+
+mongodbUriSecret:
+  name: demo-crm-mongodb-uri
+  key: MONGODB_URI
+
+externalSecrets:
+  enabled: true
+  secretStore:
+    name: gcp-secret-store
+    projectId: pure-hue-483512-h6
+    serviceAccountRef: eso-gsm
+  demoCrmMongoUri:
+    remoteKey: demo-crm-mongodb-uri
+  mongodbCreds:
+    remoteKeys:
+      rootPassword: mongodb-root-password
+      userPassword: mongodb-user-password
+      replicaSetKey: mongodb-replica-set-key
+
+mongodb:
+  enabled: true
+  architecture: replicaset
+  replicaCount: 2
+  auth:
+    enabled: true
+    usernames:
+      - demo
+    databases:
+      - admin
+    existingSecret: mongodb-creds
+  persistence:
+    enabled: true
+    size: 1Gi
+  arbiter:
+    enabled: false
+
+cert-manager:
+  enabled: true
+  installCRDs: true
+
+nginx-ingress:
+  enabled: true
+  controller:
+    service:
+      type: LoadBalancer
