@@ -38,6 +38,44 @@ Overview:
 helm install demo-crm demo-crm -f my-values.yaml
 ```
 
+## CRD Installation
+cert-manager and External Secrets Operator require CRDs. This chart installs them via the dependency charts:
+- cert-manager: `installCRDs: true`
+- external-secrets: `installCRDs: true` (set in the external-secrets release if you install it separately)
+
+cert-manager CRDs:
+- `certificaterequests.cert-manager.io`
+- `certificates.cert-manager.io`
+- `challenges.acme.cert-manager.io`
+- `clusterissuers.cert-manager.io`
+- `issuers.cert-manager.io`
+- `orders.acme.cert-manager.io`
+
+external-secrets CRDs:
+- `externalsecrets.external-secrets.io`
+- `secretstores.external-secrets.io`
+- `clustersecretstores.external-secrets.io`
+- `clusterexternalsecrets.external-secrets.io`
+- `clusterpushsecrets.external-secrets.io`
+- `pushsecrets.external-secrets.io`
+- `acraccesstokens.generators.external-secrets.io`
+- `cloudsmithaccesstokens.generators.external-secrets.io`
+- `ecrauthorizationtokens.generators.external-secrets.io`
+- `gcraccesstokens.generators.external-secrets.io`
+- `githubaccesstokens.generators.external-secrets.io`
+- `grafanas.generators.external-secrets.io`
+- `mfas.generators.external-secrets.io`
+- `passwords.generators.external-secrets.io`
+- `quayaccesstokens.generators.external-secrets.io`
+- `sshkeys.generators.external-secrets.io`
+- `stssessiontokens.generators.external-secrets.io`
+- `uuids.generators.external-secrets.io`
+- `vaultdynamicsecrets.generators.external-secrets.io`
+- `webhooks.generators.external-secrets.io`
+- `clustergenerators.generators.external-secrets.io`
+- `generatorstates.generators.external-secrets.io`
+- `fakes.generators.external-secrets.io`
+
 ## Configuration Parameters
 Key values in `demo-crm/values.yaml`:
 
