@@ -67,7 +67,7 @@ externalSecrets:
       replicaSetKey: mongodb-replica-set-key
 
 mongodb:
-  enabled: false
+  enabled: true
   architecture: replicaset
   replicaCount: 2
   auth:
@@ -92,5 +92,3 @@ nginx-ingress:
   controller:
     service:
       type: LoadBalancer
-
-
