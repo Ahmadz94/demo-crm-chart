@@ -56,6 +56,8 @@ externalSecrets:
     name: gcp-secret-store
     projectId: pure-hue-483512-h6
     serviceAccountRef: eso-gsm
+    clusterName: cluster-1
+    clusterLocation: europe-north1-a
   demoCrmMongoUri:
     remoteKey: demo-crm-mongodb-uri
   mongodbCreds:
@@ -90,3 +92,5 @@ nginx-ingress:
   controller:
     service:
       type: LoadBalancer
+
+
