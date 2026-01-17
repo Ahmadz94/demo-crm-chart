@@ -82,7 +82,7 @@ mongodb:
     enabled: false
 
 cert-manager:
-  enabled: true
+  enabled: false
   installCRDs: true
 
 nginx-ingress:

@@ -119,3 +119,16 @@ Defined in `demo-crm/Chart.yaml`:
 - `bitnami/mongodb`
 - `jetstack/cert-manager`
 - `nginx-ingress` (F5 NGINX)
+
+## ArgoCD Multi-App Setup
+Best practice is to deploy platform components in their own namespaces as separate ArgoCD apps:
+- cert-manager (namespace: cert-manager)
+- nginx-ingress (namespace: ingress-nginx)
+- external-secrets (namespace: external-secrets)
+- demo-crm (namespace: default)
+
+This chart disables cert-manager and nginx-ingress by default. If you want a single app deployment, install with:
+```bash
+helm install demo-crm demo-crm -f values-all-in-one.yaml
+```
+

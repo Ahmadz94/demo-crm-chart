@@ -1,0 +1,6 @@
+cert-manager:
+  enabled: true
+  installCRDs: true
+
+nginx-ingress:
+  enabled: true
